@@ -1,0 +1,40 @@
+instructions for setting up blank project:
+npm init -y
+npm i -S d3
+npm i -D typescript @types/d3
+# These next to lines fix an error with the xcode version being a tuple
+npm explore npm -g -- npm install node-gyp@latest
+npm explore npm -g -- npm explore npm-lifecycle -- npm install node-gyp@latest
+npm install webpack
+npm install webpack-cli
+# create tsconfig.json with the following contents:
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "es2015",
+        "sourceMap": true,
+        "declaration": true,
+        "module": "es2015",
+        "moduleResolution": "node"
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
+
+# verify that webpack.config.js contains the following:
+const path = require('path');
+
+module.exports = {
+  mode: 'development',
+  entry: './src/app.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+};
+
+
+# edit package.json and add "build" : "tsc && npx webpack"
+# add "mode: 'development'," as a member of module.exports
